@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+<script>
+
+//the function is the constructor.
+//the what and floors are the properties of the Building class.
+function Building (floors){
+    this.what="building";
+    this.floors=floors;
+}
+//myHouse is an instance of the class, and is an object with 2 properties.
+var myHouse = new Building(3);
+
+//new keyword does this behind the scenes:
+/*function Building (floors){
+    this = {};
+    this.what="building";
+    this.floors=floors;
+    return this;
+}*/
+
+//define method countFloors.
+//prototype makes a method available for all instances of a class.
+//can technically define a method within the class constructor but
+//would be v bad practice. if defining millions of buildings in NY,
+//wouldn't want to define millions of functions. just want to define the
+//function once and reuse it.
+Building.prototype.countFloors=function() {
+    document.write("I have " + this.floors + " floors.")
+}
+
+//document.write(myHouse.countFloors());
+
+//subclassing and inheritance - not covered in this course.
+
+//EXERCISE
+//for today, "this" always refers to the instance.
+var tent = function(size,cost){
+    this.what="tent";
+    this.size=size;
+    this.cost=cost;
+    this.costpersqfoot=this.size/this.cost;
+};
+
+tent.prototype.printValues = function(){
+    document.write("This is a " + this.what + ".<br>" + 
+    "It costs $" + this.cost + ".<br>" +
+    "It costs $" + this.costpersqfoot + " per sq fooot.<br>");
+};
+
+var myTent = new tent(100,50);
+document.write(myTent.printValues());
+
+</script>
+</body>
+</html>
