@@ -44,35 +44,93 @@ stack values - (first)2-5-7-3-6-9(last)
 myStack.until(7)
 => 4
 What's the time complexity?
+*/
 
- */
+//Exercises using string
 
-var Stack = function () {
+var stringStack = function () {
   this.storage = "";
 }
 
-Stack.prototype.count = function () {
+stringStack.prototype.count = function () {
   return this.storage.split("//").length - 1;
 }
 
-Stack.prototype.peek = function () {
+stringStack.prototype.peek = function () {
   var array = this.storage.split("//");
   var val = array[array.length - 1];
   return val;
 }
 
-Stack.prototype.push = function (newVal) {
+stringStack.prototype.push = function (newVal) {
   this.storage = this.storage + "//" + newVal;
   return this.count();
 }
 
-Stack.prototype.pop = function () {
+stringStack.prototype.pop = function () {
   var val = this.peek();
   this.storage = this.storage.slice(0, -(val.length + 2));
   return val;
 }
 
-myStack = new Stack();
+myStringStack = new stringStack();
+
+//Exercises using object
+
+var Stack = function (capacity) {
+  //create new blank object
+  this.storage = {};
+  //define capacity as an optional parameter. if not specified, use infinity
+  this.capacity = capacity || Infinity;
+  this.count = 0;
+};
+//Her methods:
+  /*
+  Stack.prototype.push = function (val) {
+      if (this.count < this.capacity) {
+          //use count as an index and increase count by 1 at the same time
+          this.storage[this.count++] = val;
+          return this.count;
+      } else {
+          return "Too big. remove an element before you add another.";
+      }
+  };
+
+  Stack.prototype.pop = function () {
+      //since count is one ahead of index and need to decrement count anyway,
+      //decrement first then reference count
+      var val = this.storage[--this.count];
+      delete this.storage[this.count];
+      return val;
+  }*/
+
+//My methods:
+//I prefer these because they're easier to read.
+  Stack.prototype.push = function (val) {
+    if (this.count < this.capacity) {
+      this.storage[this.count] = val;
+      this.count++;
+      return this.count;
+    } else {
+      return "Too big. remove an element before you add another.";
+    }
+  };
+
+  Stack.prototype.peek = function () {
+    return this.storage[this.count - 1];
+  }
+
+  Stack.prototype.pop = function () {
+    var val = this.storage[this.count - 1];
+    delete this.storage[this.count - 1];
+    this.count--;
+    return val;
+  }
+
+  var myStack = new Stack(3);
+  myStack.push("ssss");
+  myStack.push("ddd");
+  console.log(myStack);
 
 /*
 *** Exercises:
